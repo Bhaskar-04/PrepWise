@@ -1,3 +1,4 @@
+import { CreateAssistantDTO } from "@vapi-ai/web/dist/api";
 import { z } from "zod";
 
 export const mappings = {
@@ -96,7 +97,7 @@ export const mappings = {
   "aws amplify": "amplify",
 };
 
-{/* export const interviewer: CreateAssistantDTO = {
+ export const interviewer: CreateAssistantDTO = {
   name: "Interviewer",
   firstMessage:
     "Hello! Thank you for taking the time to speak with me today. I'm excited to learn more about you and your experience.",
@@ -152,41 +153,28 @@ End the conversation on a polite and positive note.
       },
     ],
   },
-}; */}
+}; 
 
 export const feedbackSchema = z.object({
   totalScore: z.number(),
-  categoryScores: z.tuple([
+  categoryScores: z.array(
     z.object({
-      name: z.literal("Communication Skills"),
+      name: z.enum([
+        "Communication Skills",
+        "Technical Knowledge",
+        "Problem Solving",
+        "Cultural Fit",
+        "Confidence and Clarity",
+      ]),
       score: z.number(),
       comment: z.string(),
-    }),
-    z.object({
-      name: z.literal("Technical Knowledge"),
-      score: z.number(),
-      comment: z.string(),
-    }),
-    z.object({
-      name: z.literal("Problem Solving"),
-      score: z.number(),
-      comment: z.string(),
-    }),
-    z.object({
-      name: z.literal("Cultural Fit"),
-      score: z.number(),
-      comment: z.string(),
-    }),
-    z.object({
-      name: z.literal("Confidence and Clarity"),
-      score: z.number(),
-      comment: z.string(),
-    }),
-  ]),
+    })
+  ),
   strengths: z.array(z.string()),
   areasForImprovement: z.array(z.string()),
   finalAssessment: z.string(),
 });
+
 
 export const interviewCovers = [
   "/amazon.png",
@@ -203,27 +191,3 @@ export const interviewCovers = [
   "/yahoo.png",
 ]; 
 
-export const dummyInterviews: Interview[] = [
-  {
-    id: "1",
-    userId: "user1",
-    role: "Frontend Developer",
-    type: "Technical",
-    techstack: ["React", "TypeScript", "Next.js", "Tailwind CSS"],
-    level: "Junior",
-    questions: ["What is React?"],
-    finalized: false,
-    createdAt: "2024-03-15T10:00:00Z",
-  },
-  {
-    id: "2",
-    userId: "user1",
-    role: "Full Stack Developer",
-    type: "Mixed",
-    techstack: ["Node.js", "Express", "MongoDB", "React"],
-    level: "Senior",
-    questions: ["What is Node.js?"],
-    finalized: false,
-    createdAt: "2024-03-14T15:30:00Z",
-  },
-];
